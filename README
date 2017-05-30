@@ -1,0 +1,117 @@
+用Canvas实现五子棋的思路：
+
+
+1、点击棋盘，获取坐标x，y，计算出棋子的二维数组坐标i和j，
+
+2、棋子的实现，先arc一个圆，再填充渐变色。
+
+3、下完一步棋后切换画笔和角色。
+
+4、赢法算法的实现：计算出整个15*15的棋盘有多少种赢法，定义一个win[]三维数组，数组的初始化如下。
+
+//赢法数组
+
+var wins = [];
+for (var i = 0; i < 15; i++) {
+wins[i] = [];
+for (var j = 0; j < 15; j++) {
+wins[i][j] = [];
+}
+}
+
+var count = 0; //赢法总数
+//横线赢法
+for (var i = 0; i < 15; i++) {
+for (var j = 0; j < 11; j++) {
+for (var k = 0; k < 5; k++) {
+wins[i][j + k][count] = true;
+}
+count++;
+}
+}
+
+//竖线赢法
+for (var i = 0; i < 15; i++) {
+for (var j = 0; j < 11; j++) {
+for (var k = 0; k < 5; k++) {
+wins[j + k][i][count] = true;
+}
+count++;
+}
+}
+
+//正斜线赢法
+for (var i = 0; i < 11; i++) {
+for (var j = 0; j < 11; j++) {
+for (var k = 0; k < 5; k++) {
+wins[i + k][j + k][count] = true;
+}
+count++;
+}
+}
+
+//反斜线赢法
+for (var i = 0; i < 11; i++) {
+for (var j = 14; j > 3; j--) {
+for (var k = 0; k < 5; k++) {
+wins[i + k][j - k][count] = true;
+}
+count++;
+}
+}
+
+ 
+
+tip：win数组表达的是某个坐标的棋子有多少种赢法线条（本例中有15*11*5），并且有赢法线条的编号。这在后面下完棋后，需要判断该棋子是否在某个赢法线条上，然后让blackWin[k]数组+1，等blackWin[k]==5时就赢了
+
+for (var k = 0; k < count; k++) {
+if (wins[i][j][k]) {
+blackWin[k]++;
+
+if (blackWin[k] == 5) {
+over = true;
+$("#info").text("黑子已胜！再来一盘！");
+break;
+}
+
+}
+
+}
+
+用DOM实现五子棋小游戏的思路：
+
+1、先把所有棋子的坑用td填充，那么就有15*15个坑，给每个td加上id=i-j
+
+2、每次点击棋盘的时候，获取该td的id，然后解析出来坐标i和j
+
+3、判断赢法算法同上
+
+ 
+
+悔棋的实现：
+
+1、消除棋子：如果是DOM实现，则将td的backgroundImage=none；如果是Canvas实现，则用context.clearRec(x,y,width,height)，清除画布中某个棋子区域
+
+2、去除blackWin[k]数组的标记，逆向减法
+
+for (var k = 0; k < count; k++) {
+if (wins[i][j][k]) {
+blackWin[k]--;
+}
+}
+
+3、将切换的角色切换回来，me=!me
+
+撤销悔棋的实现：
+
+1、画棋子：如果是DOM实现，则将td的backgroundImage=url(black.png)；如果是Canvas实现，则先arc圆，再填充渐变色
+
+2、赢法数组统计
+
+for (var k = 0; k < count; k++) {
+if (wins[i][j][k]) {
+blackWin[k]++;
+}
+}
+
+ 
