@@ -11,8 +11,6 @@
             background-image: url(bg.png);
         }
 
-
-
         div.chess {
             display: flex;
             width: 450px;
@@ -25,7 +23,7 @@
             align-items: center;
             justify-content: center;
         }
-
+        
         div.chessArea {
             display: block;
             width: 480px;
@@ -65,9 +63,9 @@
             justify-content: space-around;
         }
 
-            .buttonGroup div:hover {
-                cursor: pointer;
-            }
+        .buttonGroup div:hover {
+            cursor: pointer;
+        }
 
         .restart {
             text-align: center;
@@ -81,11 +79,11 @@
             border-radius: 5px;
         }
 
-            .restart > span, .revert > span, .removeRevert > span {
-                display: inline-block;
-                padding: 10px 20px;
-                color: #fff;
-            }
+        .restart > span, .revert > span, .removeRevert > span {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+        }
     </style>
     <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
@@ -105,15 +103,11 @@
             <span>撤销悔棋</span>
         </div>
     </div>
-
-
 </body>
 </html>
-
 <script>
     var over = false;
     var me = true; //我
-    
     var chess, context;
     var chessBord = [];//初始化棋盘没有棋子
     for (var i = 0; i < 15; i++) {
@@ -318,8 +312,6 @@
             i = tempI;
             j = tempJ;
         }
-        
-       
         drawChess();
         chessStepfun();
           me = !me;
