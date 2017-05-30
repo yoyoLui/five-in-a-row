@@ -205,7 +205,7 @@
 
     //画棋子
     function drawChess() {
-        if (explore) {//canvas画棋子
+        if (context) {//canvas画棋子
             context.beginPath();
             context.arc(15 + i * 30, 15 + j * 30, 13, 0, 2 * Math.PI);//画圆
             context.closePath();
@@ -237,7 +237,7 @@
 
     //移除棋子
     function removeChess() {
-        if (explore) {
+        if (context) {
            
             context.clearRect(i * 30, j * 30, 30, 30);
         } else {
@@ -370,13 +370,12 @@
             }
         }
     }
-   var explore=false;
     //onload方法
     $(document).ready(function () {
         $("#chessDiv").append('<canvas class="chess" id="chess" width="450px" height="450px" ></canvas>');
         chess = document.getElementById("chess");
         context = chess.getContext('2d');
-        if (explore) {//canvas
+        if (context) {//canvas
             $('canvas').css("display", "block");
             context.strokeStyle = '#bfbfbf'; //边框颜色
             chess.onclick = function (e) {//Canvas下棋事件
